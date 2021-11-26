@@ -1,12 +1,25 @@
 package com.msb.tank;
 
 import java.awt.*;
+import java.util.Random;
 
 public class Tank {
     private int x, y;
     private Dir dir = Dir.DOWN;
     private  static final int SPEED = 5;
     private boolean living = true;
+    private boolean moving  = false;
+    private TankFrame tf = null;
+    private Random random = new Random();
+    private Group group = Group.BAD;
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
 
     public int getX() {
         return x;
@@ -24,8 +37,7 @@ public class Tank {
         this.y = y;
     }
 
-    private boolean moving  = false;
-    private TankFrame tf = null;
+
 
     public static int WIDTH = ResourceMgr.tankD.getWidth(),
             HEIGHT = ResourceMgr.tankD.getHeight();
@@ -47,11 +59,12 @@ public class Tank {
     }
 
 
-    public Tank(int x, int y, Dir dir, TankFrame tf){
+    public Tank(int x, int y, Dir dir, Group group, TankFrame tf){
         super();
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.group = group;
         this.tf = tf;
     }
 
@@ -93,12 +106,13 @@ public class Tank {
                 y+=SPEED;
                 break;
         }
+        if(random.nextInt(10)>8) this.fire();
     }
 
     public void fire() {
         int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2;
         int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT/2;
-        tf.bullets.add(new Bullet(bX, bY, this.dir, this.tf));
+        tf.bullets.add(new Bullet(bX, bY, this.dir, this.group, tf));
     }
 
     public void die() {
