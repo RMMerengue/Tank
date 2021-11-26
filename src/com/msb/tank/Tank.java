@@ -8,7 +8,7 @@ public class Tank {
     private Dir dir = Dir.DOWN;
     private  static final int SPEED = 5;
     private boolean living = true;
-    private boolean moving  = false;
+    private boolean moving  = true;
     private TankFrame tf = null;
     private Random random = new Random();
     private Group group = Group.BAD;
@@ -106,8 +106,16 @@ public class Tank {
                 y+=SPEED;
                 break;
         }
-        if(random.nextInt(10)>8) this.fire();
+        if(this.group==Group.BAD&&random.nextInt(10)>8) this.fire();
+        if(this.group==Group.BAD&&random.nextInt(100)>90){
+            randomDir();
+        }
     }
+
+    private void randomDir() {
+        this.dir = Dir.values()[random.nextInt(4)];
+    }
+
 
     public void fire() {
         int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2;
