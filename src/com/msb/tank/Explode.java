@@ -1,9 +1,10 @@
 package com.msb.tank;
 
+import com.msb.tank.abstractfactory.BaseExplode;
+
 import java.awt.*;
 
-public class Explode {
-    private static final int SPEED = 10;
+public class Explode extends BaseExplode {
     public static int WIDTH = ResourceMgr.explodes[0].getWidth(),
                       HEIGHT = ResourceMgr.explodes[0].getHeight();
     private int x, y;
@@ -17,7 +18,7 @@ public class Explode {
         this.y = y;
         this.tf = tf;
 
-        new Audio("audio/explode.wav").play();
+        new Thread(()->new Audio("audio/explode.wav").play()).start();
     }
 
     public void paint(Graphics g) {
