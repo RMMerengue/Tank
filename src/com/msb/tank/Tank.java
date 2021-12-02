@@ -1,20 +1,23 @@
 package com.msb.tank;
 
 import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 public class Tank {
-    private int x, y;
-    private Dir dir = Dir.DOWN;
+    int x, y;
+    Dir dir = Dir.DOWN;
     private  static final int SPEED = Integer.parseInt((String) propertyMgr.get("tankSpeed"));
     private boolean living = true;
     private boolean moving  = true;
-    private TankFrame tf = null;
+    TankFrame tf = null;
     private Random random = new Random();
-    private Group group = Group.BAD;
+    Group group = Group.BAD;
     public static int WIDTH = ResourceMgr.goodTankD.getWidth(),
             HEIGHT = ResourceMgr.goodTankD.getHeight();
     Rectangle rect = new Rectangle();
+
+    FireStrategy fs;
 
     public Group getGroup() {
         return group;
@@ -69,6 +72,23 @@ public class Tank {
         rect.y = this.y;
         rect.width = WIDTH;
         rect.height = HEIGHT;
+
+        if(group == Group.GOOD) {
+            String goodFSName = (String)propertyMgr.get("goodFS");
+            try {
+                fs  = (FireStrategy) Class.forName(goodFSName).getDeclaredConstructor().newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            String badFSName = (String)propertyMgr.get("badFS");
+            try {
+                fs  = (FireStrategy) Class.forName(badFSName).getDeclaredConstructor().newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void paint(Graphics g) {
@@ -135,9 +155,8 @@ public class Tank {
 
 
     public void fire() {
-        int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2;
-        int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT/2;
-        tf.bullets.add(new Bullet(bX, bY, this.dir, this.group, tf));
+        fs.fire(this);
+
     }
 
     public void die() {
