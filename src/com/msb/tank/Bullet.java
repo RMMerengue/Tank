@@ -3,7 +3,7 @@ package com.msb.tank;
 import java.awt.*;
 
 public class Bullet {
-    private static final int SPEED = 10;
+    private static final int SPEED = Integer.parseInt((String) propertyMgr.get("bulletSpeed"));
     public static int WIDTH = ResourceMgr.bulletD.getWidth(),
                       HEIGHT = ResourceMgr.bulletD.getHeight();
     private int x, y;

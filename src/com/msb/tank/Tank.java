@@ -6,7 +6,7 @@ import java.util.Random;
 public class Tank {
     private int x, y;
     private Dir dir = Dir.DOWN;
-    private  static final int SPEED = 5;
+    private  static final int SPEED = Integer.parseInt((String) propertyMgr.get("tankSpeed"));
     private boolean living = true;
     private boolean moving  = true;
     private TankFrame tf = null;
