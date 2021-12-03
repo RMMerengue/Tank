@@ -1,9 +1,6 @@
 package com.msb.tank.cor;
 
-import com.msb.tank.Bullet;
-import com.msb.tank.Explode;
-import com.msb.tank.GameObject;
-import com.msb.tank.Tank;
+import com.msb.tank.*;
 
 public class BulletTankCollider implements Collider{
     @Override
@@ -19,7 +16,7 @@ public class BulletTankCollider implements Collider{
                 int eX = t.getX() +Tank.WIDTH/2 - Explode.WIDTH/2;
                 int eY = t.getY() +Tank.HEIGHT/2 - Explode.HEIGHT/2;
 
-                b.gm.add(new Explode(eX, eY, b.gm));
+                new Explode(eX, eY);
                 return false;
             }
         }else if(o1 instanceof Tank && o2 instanceof Bullet){
