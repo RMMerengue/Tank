@@ -10,6 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameModel {
+    private static final GameModel INSTANCE = new GameModel();
+    public static GameModel getInstance(){
+        return INSTANCE;
+    }
 
     Tank myTank = new Tank(200, 400, Dir.DOWN, Group.GOOD,this);
     //Bullet b = new Bullet(300, 300, Dir.DOWN);
@@ -20,7 +24,7 @@ public class GameModel {
 
     List<GameObject> objects = new ArrayList<>();
 
-    public GameModel() {
+    private GameModel() {
         int initTankCount = Integer.parseInt((String) propertyMgr.get("initTankCount"));
 
         for (int i = 0; i < initTankCount; i++) {
