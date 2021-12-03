@@ -7,6 +7,7 @@ import java.util.Random;
 
 public class Tank extends GameObject{
     public int x, y;
+    int oldx, oldy;
     public Dir dir = Dir.DOWN;
     private  static final int SPEED = Integer.parseInt((String) propertyMgr.get("tankSpeed"));
     private boolean living = true;
@@ -125,7 +126,15 @@ public class Tank extends GameObject{
 
     }
 
+    public void back(){
+        x = oldx;
+        y = oldy;
+    }
+
     private void move() {
+        oldx = x;
+        oldy = y;
+
         if(!moving) return;
         switch(dir) {
             case LEFT:

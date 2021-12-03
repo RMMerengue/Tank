@@ -11,7 +11,7 @@ public class BulletTankCollider implements Collider{
         if(o1 instanceof Bullet && o2 instanceof Tank){
             Bullet b = (Bullet) o1;
             Tank t = (Tank) o2;
-            if(b.group==t.getGroup()) return false;
+            if(b.group==t.getGroup()) return true;
 
             if (b.rect.intersects(t.rect)){
                 t.die();
@@ -20,13 +20,11 @@ public class BulletTankCollider implements Collider{
                 int eY = t.getY() +Tank.HEIGHT/2 - Explode.HEIGHT/2;
 
                 b.gm.add(new Explode(eX, eY, b.gm));
-                return true;
+                return false;
             }
-            return false;
         }else if(o1 instanceof Tank && o2 instanceof Bullet){
             return collide(o2, o1);
-        }else{
-            return true;
         }
+        return true;
     }
 }
