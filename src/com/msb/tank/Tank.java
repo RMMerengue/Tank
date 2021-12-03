@@ -1,24 +1,33 @@
 package com.msb.tank;
 
+import com.msb.tank.strategy.FireStrategy;
+
 import java.awt.*;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
-public class Tank {
-    int x, y;
-    Dir dir = Dir.DOWN;
+public class Tank extends GameObject{
+    public int x, y;
+    public Dir dir = Dir.DOWN;
     private  static final int SPEED = Integer.parseInt((String) propertyMgr.get("tankSpeed"));
     private boolean living = true;
-    private boolean moving  = true;
+    private boolean moving;
     TankFrame tf = null;
     private Random random = new Random();
-    Group group = Group.BAD;
+    public Group group = Group.BAD;
     public static int WIDTH = ResourceMgr.goodTankD.getWidth(),
             HEIGHT = ResourceMgr.goodTankD.getHeight();
-    Rectangle rect = new Rectangle();
+    public Rectangle rect = new Rectangle();
 
     FireStrategy fs;
-    GameModel gm;
+    public GameModel gm;
+
+    public Rectangle getRect() {
+        return rect;
+    }
+
+    public void setRect(Rectangle rect) {
+        this.rect = rect;
+    }
 
     public Group getGroup() {
         return group;
@@ -75,6 +84,7 @@ public class Tank {
         rect.height = HEIGHT;
 
         if(group == Group.GOOD) {
+            moving = false;
             String goodFSName = (String)propertyMgr.get("goodFS");
             try {
                 fs  = (FireStrategy) Class.forName(goodFSName).getDeclaredConstructor().newInstance();
@@ -83,6 +93,7 @@ public class Tank {
             }
         }
         else {
+            moving = true;
             String badFSName = (String)propertyMgr.get("badFS");
             try {
                 fs  = (FireStrategy) Class.forName(badFSName).getDeclaredConstructor().newInstance();
@@ -93,7 +104,7 @@ public class Tank {
     }
 
     public void paint(Graphics g) {
-        if(!living) gm.tanks.remove(this);
+        if(!living) gm.remove(this);
         switch(dir){
             case LEFT:
                 g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankL : ResourceMgr.badTankL, x, y, null);
@@ -162,6 +173,10 @@ public class Tank {
 
     public void die() {
         this.living = false;
+    }
+
+    public void stop(){
+        moving = false;
     }
 }
 

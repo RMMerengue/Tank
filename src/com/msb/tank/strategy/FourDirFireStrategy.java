@@ -1,4 +1,6 @@
-package com.msb.tank;
+package com.msb.tank.strategy;
+
+import com.msb.tank.*;
 
 public class FourDirFireStrategy implements FireStrategy{
     @Override
@@ -12,7 +14,7 @@ public class FourDirFireStrategy implements FireStrategy{
         }
 
 
-        if(t.group==Group.GOOD){
+        if(t.group== Group.GOOD){
             new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
         }
     }

@@ -1,4 +1,9 @@
-package com.msb.tank;
+package com.msb.tank.strategy;
+
+import com.msb.tank.Audio;
+import com.msb.tank.Bullet;
+import com.msb.tank.Group;
+import com.msb.tank.Tank;
 
 public class DefaultFireStrategy implements FireStrategy{
     @Override
@@ -7,7 +12,7 @@ public class DefaultFireStrategy implements FireStrategy{
         int bY = t.y + Tank.HEIGHT/2 - Bullet.HEIGHT/2;
         new Bullet(bX, bY, t.dir, t.group, t.gm);
 
-        if(t.group==Group.GOOD){
+        if(t.group== Group.GOOD){
             new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
         }
     }
