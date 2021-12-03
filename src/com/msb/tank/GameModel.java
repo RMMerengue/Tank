@@ -4,6 +4,8 @@ import com.msb.tank.cor.BulletTankCollider;
 import com.msb.tank.cor.Collider;
 import com.msb.tank.cor.ColliderChain;
 import com.msb.tank.cor.TankTankCollider;
+import com.msb.tank.decorator.RectDecorator;
+import com.msb.tank.decorator.TailDecorator;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -33,6 +35,9 @@ public class GameModel {
 
     private void init() {
         myTank = new Tank(200, 400, Dir.DOWN, Group.GOOD);
+        new RectDecorator(myTank);
+        new TailDecorator(myTank);
+
         int initTankCount = Integer.parseInt((String) propertyMgr.get("initTankCount"));
 
         for (int i = 0; i < initTankCount; i++) {

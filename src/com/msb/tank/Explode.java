@@ -6,7 +6,6 @@ public class Explode extends GameObject{
     private static final int SPEED = 10;
     public static int WIDTH = ResourceMgr.explodes[0].getWidth(),
                       HEIGHT = ResourceMgr.explodes[0].getHeight();
-    private int x, y;
 
     public int step;
 
@@ -23,5 +22,15 @@ public class Explode extends GameObject{
         if(step>=ResourceMgr.explodes.length){
             GameModel.getInstance().remove(this);
         }
+    }
+
+    @Override
+    public int getWidth() {
+        return HEIGHT;
+    }
+
+    @Override
+    public int getHeight() {
+        return WIDTH;
     }
 }

@@ -8,7 +8,7 @@ public class BulletTankCollider implements Collider{
         if(o1 instanceof Bullet && o2 instanceof Tank){
             Bullet b = (Bullet) o1;
             Tank t = (Tank) o2;
-            if(b.group==t.getGroup()) return true;
+            if(b.group==t.getGroup()||t.group==Group.GOOD) return true;
 
             if (b.rect.intersects(t.rect)){
                 t.die();

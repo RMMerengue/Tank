@@ -6,7 +6,6 @@ import java.awt.*;
 import java.util.Random;
 
 public class Tank extends GameObject{
-    public int x, y;
     int oldx, oldy;
     public Dir dir = Dir.DOWN;
     private  static final int SPEED = Integer.parseInt((String) propertyMgr.get("tankSpeed"));
@@ -185,6 +184,16 @@ public class Tank extends GameObject{
 
     public void stop(){
         moving = false;
+    }
+
+    @Override
+    public int getWidth() {
+        return HEIGHT;
+    }
+
+    @Override
+    public int getHeight() {
+        return WIDTH;
     }
 }
 
